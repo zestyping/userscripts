@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Hide backticks on Hackpad
 // @namespace    http://zesty.ca/
-// @version      1.1
+// @version      1.2
 // @description  Hide the ugly backticks around code-formatted text on Hackpad.
 // @author       Ka-Ping Yee
 // @match        https://*.hackpad.com/*
@@ -25,8 +25,13 @@ if (typeof ace !== 'undefined') {
     // to display: none because that screws up the editor; you still have to
     // be able to insert and delete backticks to control formatting.
     addGlobalStyle('span { font-weight: normal; opacity: 0.9; }');
-    addGlobalStyle('span.code { font-size: 95%; color: #800; margin: 0 !important; padding: 1px 3px !important; box-shadow: none; background: #f4f4f4; }');
+    addGlobalStyle('ul.listtype-code, div#sidediv, span.code { font-size: 95%; color: #600; }');
+    addGlobalStyle('span.code { border-radius: 0; margin: 0 !important; padding: 1px 3px !important; box-shadow: none; background: #f4f4f4; }');
     addGlobalStyle('span.code.hidebackticks { user-select: none; font-size: 6px; font-family: arial; opacity: 0.2; margin: 0 -1px !important; padding: 1px 0 !important; }');
+    addGlobalStyle('ul.listtype-code { margin-left: 26px; background: #f4f4f4; line-height: 1.1; }');
+    addGlobalStyle('ul.listtype-code li { padding: 2px 3px; margin: 0 !important; }');
+    addGlobalStyle('div#sidediv div { color: #ddd !important; margin-top: -2px; }');
+    addGlobalStyle('a.lang-menu { border-bottom: none; color: #8c8; }');
 
     var originalAceEditor = ace.editor;
     ace.editor = function(a, b) {
