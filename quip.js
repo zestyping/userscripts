@@ -1,12 +1,22 @@
 // ==UserScript==
 // @name         Quip
 // @namespace    http://tampermonkey.net/
-// @version      0.2
+// @version      0.3
 // @description  Fix formatting and hide the conversation sidebar on Quip pages
 // @author       Ping
 // @match        https://*.quip.com/*
 // @grant        none
 // ==/UserScript==
+
+// Goal: Focus on the content.  Here's what this userscript does to Quip:
+//   - Makes all formatting simple and uniform (Roboto on all pages)
+//   - Makes headings easier to see (dark red)
+//   - Hides the gigantic conversation sidebar when you first load any page
+//   - Prevents the backtick key from horribly cycling through 9 formats
+//   - Stops Quip from auto-bolding list items that have subitems
+//   - Reduces the enormous wasteful margins around the page
+//   - Shrinks the huge annoying bubble with the formatting buttons
+//   - Shrinks the huge yellow chat button to a reasonable size
 
 (function() {
     'use strict';
@@ -272,6 +282,16 @@ div.editor-stylebar.visible.expanded {
 }
 `;
     head.appendChild(style);
+
+    // Disable the annoying backtick key.
+    document.body.addEventListener('keydown', function(event) {
+        if (event.keyCode === 192) {
+            console.log('blocked keydown event for backtick');
+            event.stopPropagation();
+            event.preventDefault();
+            return false;
+        }
+    }, true);
 
     // Hide the conversation sidebar.
     function hide_conversation() {
