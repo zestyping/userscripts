@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quip
 // @namespace    http://tampermonkey.net/
-// @version      0.3
+// @version      0.4
 // @description  Fix formatting and hide the conversation sidebar on Quip pages
 // @author       Ping
 // @match        https://*.quip.com/*
@@ -279,6 +279,21 @@ div.editor-stylebar.visible.expanded {
 .annotation-gutter-icon.numbered {
     font-size: 10px;
     line-height: 19px;
+}
+
+/* Chat bubbles */
+.message-bubble .chat-bubble, .message-bubble .chat-card {
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 15px;
+}
+
+.chat-bubble .chat-bubble-bg {
+    border-radius: 6px;
+}
+
+.chat-bubble .chat-bubble-body {
+    padding: 6px;
 }
 `;
     head.appendChild(style);
