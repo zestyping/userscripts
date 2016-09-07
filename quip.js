@@ -284,7 +284,7 @@ div.editor-stylebar.visible.expanded {
 /* Chat bubbles */
 .message-bubble .chat-bubble, .message-bubble .chat-card {
     font-size: 12px;
-    font-weight: 300;
+    font-weight: 400;
     line-height: 15px;
 }
 
