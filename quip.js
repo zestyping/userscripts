@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quip
 // @namespace    http://tampermonkey.net/
-// @version      0.6
+// @version      0.7
 // @description  Fix formatting and hide the conversation sidebar on Quip pages
 // @author       Ping
 // @match        https://*.quip.com/*
