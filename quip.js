@@ -312,7 +312,6 @@ div.editor-stylebar.visible.expanded {
     border-right: none;
     margin: 60px 0 0 0;
     padding: 4px 0;
-    width: 300px;
 }
 
 .editor-outline .editor-outline-section {
