@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         c3subtitles
 // @namespace    http://tampermonkey.net/
-// @version      0.4
+// @version      0.5
 // @description  autocompletion for c3subtitles!
 // @author       http://github.com/zestyping
 // @match        https://live.c3subtitles.de/write/*
@@ -37,7 +37,7 @@
         hint.style.color = '#2c2';
         hint.style.pointerEvents = 'none';
         hint.style.textAlign = 'right';
-        hint.innerText = 'use TAB to autocomplete ';
+        hint.innerText = 'use TAB to autocomplete\xa0\xa0';
         parent.appendChild(hint);
 
         var measure = document.createElement('span');
