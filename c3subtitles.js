@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @description  autocompletion for c3subtitles!
-// @author       You
+// @author       http://github.com/zestyping
 // @match        https://live.c3subtitles.de/write/*
 // @grant        none
 // ==/UserScript==
