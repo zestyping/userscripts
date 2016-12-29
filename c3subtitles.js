@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         c3subtitles
 // @namespace    http://tampermonkey.net/
-// @version      1.5
+// @version      1.6
 // @description  autocompletion for c3subtitles!
 // @author       http://github.com/zestyping
 // @match        https://live.c3subtitles.de/write/*
@@ -22,10 +22,6 @@
                 if (isCompleted[prefix]) break;
             }
             isCompleted[word] = true;
-            if (word.toLowerCase() === word) {
-                addCompletion(
-                  word.substring(0, 1).toUpperCase() + word.substring(1));
-            }
         }
     };
 
@@ -150,11 +146,15 @@
     // A few hand-picked words.
     var hackerWords = [
         'computer', 'software', 'hardware', 'exploit', 'vulnerability',
-        'malware', 'attack', 'intrusion', 'protection', 'detection',
+        'firmware', 'malware', 'attack', 'intrusion', 'protection', 'detection',
+        'embedded', 'device', 'peripheral', 'implementation', 'implement',
         'disclosure', 'publication', 'research', 'announce', 'announcement',
         'communicate', 'communication', 'community', 'communities',
-        'international', 'political', 'economic', 'organization',
-        'Congress', 'application', 'server', 'network', 'Ethernet',
+        'national', 'international', 'political', 'economic', 'organization',
+        'activist', 'defense', 'testimony', 'justice', 'injustice',
+        'jurisdiction', 'observation', 'indictment', 'prosecution',
+        'Chaos Communication', 'Communication Congress', 'Congress',
+        'application', 'server', 'network', 'Ethernet',
         'architecture', 'request', 'protocol', 'abstract', 'virtual',
         'container', 'virtualization', 'operating', 'system', 'instruction',
         'building', 'build', 'continuous', 'integration', 'interface',
@@ -164,12 +164,22 @@
         'optimize', 'optimization', 'understand', 'testing', 'compiler',
         'latency' ,'performance', 'incremental', 'throughput', 'capacity',
         'expensive', 'penalty', 'advantage', 'disadvantage',
-        'participant', 'volunteer', 'connect', 'remember',
+        'participant', 'volunteer', 'connect', 'remember', 'individual',
         'something', 'everything', 'anything',
         'someone', 'everyone', 'anyone',
         'somebody', 'everybody', 'anybody',
         'somewhere', 'everywhere', 'anywhere',
         'overwhelm', 'overwhelmed', 'overwhelming',
+        'Internet', 'telecommunications', 'provider', 'platform',
+        'anonymous', 'pseudonymous', 'identification', 'password', 'privacy',
+        'United States', 'Germany', 'Europe', 'Canada',
+        'public key', 'private key', 'encryption', 'decryption', 'integrity',
+        'encryption key', 'decryption key', 'symmetric encryption', 'intercept',
+        'man-in-the-middle', 'obfuscation', 'steganography', 'security',
+        'anonymity', 'authentication', 'authorization', 'insecure',
+        'dangerous', 'significant', 'remarkable', 'critical', 'devastating',
+        'massive', 'widespread', 'profound', 'phenomenon', 'probably',
+        'probability', 'statistical', 'user interface'
     ];
 
     var initialWords = autocompleteWords.concat(
