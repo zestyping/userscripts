@@ -179,7 +179,15 @@
         'anonymity', 'authentication', 'authorization', 'insecure',
         'dangerous', 'significant', 'remarkable', 'critical', 'devastating',
         'massive', 'widespread', 'profound', 'phenomenon', 'probably',
-        'probability', 'statistical', 'user interface'
+        'probability', 'statistical', 'user interface',
+        'interplanetary', 'colonization', 'species',
+        'Liz George', 'Peter Buschkamp', 'technological', 'challenge',
+        'humanity', 'solar system', 'planet', 'exoplanet', 'astronomer',
+        'satellite', 'telescope', 'future', 'planetary', 'rocket',
+        'Earth', 'Mars', 'colony', 'asteroid', 'space shuttle', 'shuttle',
+        'interstellar', 'expansion', 'cosmos', 'reasonable', 'conditions',
+        'atmosphere', 'agriculture', 'civilization', 'settlement',
+        'residential', 'supply chain', 'transport'
     ];
 
     var initialWords = autocompleteWords.concat(
