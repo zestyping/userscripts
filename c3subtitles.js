@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         c3subtitles
 // @namespace    http://tampermonkey.net/
-// @version      0.5
+// @version      0.6
 // @description  autocompletion for c3subtitles!
 // @author       http://github.com/zestyping
 // @match        https://live.c3subtitles.de/write/*
@@ -31,7 +31,7 @@
         hint.style.fontSize = '16px';
         hint.style.position = 'absolute';
         hint.style.left = field.offsetLeft + 'px';
-        hint.style.top = field.offsetTop + 'px';
+        hint.style.bottom = '0px';
         hint.style.height = field.offsetHeight + 'px';
         hint.style.right = '0px';
         hint.style.color = '#2c2';
