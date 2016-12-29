@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         c3subtitles
 // @namespace    http://tampermonkey.net/
-// @version      1.4
+// @version      1.5
 // @description  autocompletion for c3subtitles!
 // @author       http://github.com/zestyping
 // @match        https://live.c3subtitles.de/write/*
@@ -162,6 +162,8 @@
         'service', 'cloud', 'accelerate', 'problem', 'solution', 'science',
         'hypothesis', 'experiment', 'database', 'infrastructure',
         'optimize', 'optimization', 'understand', 'testing', 'compiler',
+        'latency' ,'performance', 'incremental', 'throughput', 'capacity',
+        'expensive', 'penalty', 'advantage', 'disadvantage',
         'participant', 'volunteer', 'connect', 'remember',
         'something', 'everything', 'anything',
         'someone', 'everyone', 'anyone',
@@ -216,6 +218,7 @@
 
         var inputEvent = new Event('input', { bubbles: true });
         var lastWord = '';
+        var lastTwoWords = '';
 
         var handleKeyDown = function(keyEvent) {
             if (keyEvent.keyCode === 9) {
@@ -230,9 +233,18 @@
                 if (timesTyped[word] >= 2) {
                     addCompletion(word);
                 }
+                if (lastTwoWords) {
+                    var twoWords = lastTwoWords.replace(/[^a-zA-Z0-9\xc0-\xff]*$/, '');  // ignore trailing punctuation
+                    timesTyped[twoWords] = (timesTyped[twoWords] || 0) + 1;
+                    if (timesTyped[twoWords] >= 2) {
+                        addCompletion(twoWords);
+                    }
+                }
             }
 
             lastWord = field.value.replace(/.* /, '');
+            var twoWordMatch = field.value.match(/\S\S\S+ \S\S\S+$/);
+            lastTwoWords = twoWordMatch ? twoWordMatch[0] : null;
             completion = completions[lastWord];
             if (keyCode === 9 && completion) {  // tab
                 field.value += completion;
