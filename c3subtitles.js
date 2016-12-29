@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         c3subtitles
 // @namespace    http://tampermonkey.net/
-// @version      2.0
+// @version      2.1
 // @description  autocompletion for c3subtitles!
 // @author       http://github.com/zestyping
 // @match        https://live.c3subtitles.de/write/*
@@ -224,7 +224,42 @@
         'umliegenden', 'unerwartet', 'unheimlich', 'unklar', 'unter',
         'anderem', 'vage', 'vehement', 'allem', 'weder', 'winzigen', 'wobei',
         'wodurch', 'womit', 'wonach', 'wovon', 'wozu', 'wuchs', 'zudem',
-        'zukommen', 'anderen', 'einen', 'zuordnen'
+        'zukommen', 'anderen', 'einen', 'zuordnen',
+
+        'Computer', 'Software', 'Hardware', 'Exploit', 'Sicherheitslücke',
+        'Firmware', 'Attacke', 'Veröffentlichung', 'Device', 'Gerät',
+        'Malware', 'Forschung', 'Nachweis', 'bekanntgeben', 'veröffentlichen',
+        'implementieren', 'ankündigen', 'Community', 'Chaos', 'Communities',
+        'Nation', 'Staat', 'Überwachung', 'Privatsphäre', 'international',
+        'politisch', 'Politik', 'Wirtschaft', 'Organisation', 'Gemeinschaft',
+        'staatlich', 'Freiheit', 'Angst', 'Aktivist', 'Aktivismus', 'Abwehr',
+        'Cyber', 'Justiz', 'Gericht', 'Prozess', 'Defense', 'Gerechtigkeit',
+        'Ungerechtigkeit', 'Zeuge', 'Aussage', 'Gutachten', 'Beobachtung',
+        'beobachten', 'Verfahren', 'Chaos Communication',
+        'Communication Congress', 'Congress', 'Anwendung', 'Application',
+        'Server', 'Client', 'Netzwerk', 'Ethernet', 'Architektur', 'Request',
+        'Protokoll', 'abstrakt', 'virtuell', 'Virtualisierung',
+        'Operating System', 'Betriebssystem', 'Container', 'Einführung',
+        'Handbuch', 'bauen', 'kompilieren', 'kontinuierlich', 'Integration',
+        'Continuous Integration', 'Modul', 'Assembly', 'Assembler',
+        'Packet', 'deploy',
+        'Cloud', 'Wolke', 'beschleunigen', 'Hypothese', 'Lösung',
+        'Wissenschaft', 'Chemie', 'Rechnen', 'Rechner', 'Experiment',
+        'Infrastruktur', 'Datenbank', 'Optimierung', 'Optimieren',
+        'optimieren', 'experimentieren', 'verstehen', 'Verständnis', 'Testen',
+        'Unit Tests', 'Kompiler', 'kompilieren', 'Latenz', 'Durchsatz',
+        'Performanz', 'zuwachsend', 'wachsend', 'Kapazität', 'teuer',
+        'Penalty', 'Strafe', 'Vorteil', 'Nachteil', 'Teilnehmer',
+        'Freiwilliger', 'verbinden', 'Verbindung', 'erinnern', 'Gedenken',
+        'irgendjemand', 'irgendwer', 'irgendwas', 'jede', 'Internet',
+        'Provider', 'Telekommunikationsprovider', 'Platform', 'anonym',
+        'Passwort', 'Authentifizierung', 'authentifizieren', 'Pseudonym',
+        'Passwort', 'Amerika', 'Deutschland', 'Platform', 'Europa', 'Kanada',
+        'Frankreich', 'Private Key', 'Public Key', 'Verschlüsselung',
+        'verschlüsslen', 'Entschlüsselung', 'entschlüsseln', 'Integrität',
+        'symmetrisch', 'Intercept', 'Man-in-the-Middle', 'Sicherheit',
+        'Verschleierung', 'Obfuscation', 'Sicherheit', 'Anonymität',
+        'kritisch'
     ];
 
     var resetDictionary = function (initialWords) {
