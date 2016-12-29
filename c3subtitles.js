@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         c3subtitles
 // @namespace    http://tampermonkey.net/
-// @version      1.2
+// @version      1.3
 // @description  autocompletion for c3subtitles!
 // @author       http://github.com/zestyping
 // @match        https://live.c3subtitles.de/write/*
@@ -14,7 +14,7 @@
     var isCompleted = {};
 
     var addCompletion = function(word) {
-        if (word.length >= 4) {
+        if (word.length >= 5) {
             for (var i = word.length - 1; i >= 2; i--) {
                 var prefix = word.substring(0, i);
                 var rest = word.substring(i);
@@ -22,6 +22,10 @@
                 if (isCompleted[prefix]) break;
             }
             isCompleted[word] = true;
+            if (word.toLowerCase() === word) {
+                addCompletion(
+                  word.substring(0, 1).toUpperCase() + word.substring(1));
+            }
         }
     };
 
@@ -143,8 +147,23 @@
         'all', 'would', 'there', 'their'
     ];
 
+    // A few hand-picked words.
+    var hackerWords = [
+        'computer', 'software', 'hardware', 'exploit', 'vulnerability',
+        'communicate', 'communication', 'community', 'communities',
+        'international', 'political', 'economic', 'organization',
+        'Congress', 'application', 'server', 'network', 'Ethernet',
+        'architecture', 'request', 'protocol', 'abstract', 'virtual',
+        'container', 'virtualization', 'operating', 'system', 'instruction',
+        'building', 'build', 'continuous', 'integration', 'interface',
+        'module', 'assembly', 'package', 'deploy', 'deployment',
+        'service', 'cloud', 'accelerate', 'problem', 'solution', 'science',
+        'hypothesis', 'experiment', 'database', 'infrastructure',
+        'optimize', 'optimization', 'understand', 'testing', 'compiler'
+    ];
+
     var initialWords = autocompleteWords.concat(
-        autocompleteWords2.concat(commonWords));
+        autocompleteWords2).concat(commonWords).concat(hackerWords);
     for (var i = 0; i < initialWords.length; i++) {
         addCompletion(initialWords[i]);
     }
