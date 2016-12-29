@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         c3subtitles
 // @namespace    http://tampermonkey.net/
-// @version      0.3
+// @version      0.4
 // @description  autocompletion for c3subtitles!
 // @author       http://github.com/zestyping
 // @match        https://live.c3subtitles.de/write/*
@@ -53,15 +53,19 @@
 
         var inputEvent = new Event('input', { bubbles: true });
         var lastWord = '';
+        var keysHeld = 0;
 
         var handleKeyDown = function(keyEvent) {
+            keysHeld += 1;
             if (keyEvent.keyCode === 9) {
                 keyEvent.preventDefault();  // don't move focus
             }
         };
         var handleKeyUp = function(keyEvent) {
+            keysHeld -= 1;
             var keyCode = keyEvent.keyCode;
-            if (keyCode === 32 || keyCode === 13) {  // finished word
+            if ((keyCode === 32 || keyCode === 13) &&  // finished word
+                keysHeld === 0) {  // not still holding down last letter
                 var word = lastWord.replace(/[^a-zA-Z0-9\xc0-\xff]*$/, '');  // ignore trailing punctuation
                 timesTyped[word] = (timesTyped[word] || 0) + 1;
                 if (timesTyped[word] >= 2) {
