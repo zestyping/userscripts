@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         c3subtitles
 // @namespace    http://tampermonkey.net/
-// @version      1.1
+// @version      1.2
 // @description  autocompletion for c3subtitles!
 // @author       http://github.com/zestyping
 // @match        https://live.c3subtitles.de/write/*
@@ -143,7 +143,8 @@
         'all', 'would', 'there', 'their'
     ];
 
-    var initialWords = autocompleteWords + autocompleteWords2 + commonWords;
+    var initialWords = autocompleteWords.concat(
+        autocompleteWords2.concat(commonWords));
     for (var i = 0; i < initialWords.length; i++) {
         addCompletion(initialWords[i]);
     }
