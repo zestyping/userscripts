@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         c3subtitles
 // @namespace    http://tampermonkey.net/
-// @version      0.2
+// @version      0.3
 // @description  autocompletion for c3subtitles!
 // @author       http://github.com/zestyping
 // @match        https://live.c3subtitles.de/write/*
@@ -12,7 +12,7 @@
     var timesTyped = {};
     var completions = {};
     var isCompleted = {};
-    
+
     window.setTimeout(function() {
         document.body.style.lineHeight = '1.5';
         var pendingArea = document.querySelector('div[style="display: flex; flex-direction: column-reverse;"]');
@@ -45,20 +45,23 @@
         measure.style.opacity = '0';
         measure.style.fontSize = '16px';
         parent.appendChild(measure);
-        
+
         function measureWidth(text) {
             measure.innerText = text;
             return measure.offsetWidth;
         }
-        
+
         var inputEvent = new Event('input', { bubbles: true });
         var lastWord = '';
-        
+
         var handleKeyDown = function(keyEvent) {
             if (keyEvent.keyCode === 9) {
                 keyEvent.preventDefault();  // don't move focus
             }
-            if (keyEvent.keyCode === 32 || keyEvent.keyCode === 13) {  // finished word
+        };
+        var handleKeyUp = function(keyEvent) {
+            var keyCode = keyEvent.keyCode;
+            if (keyCode === 32 || keyCode === 13) {  // finished word
                 var word = lastWord.replace(/[^a-zA-Z0-9\xc0-\xff]*$/, '');  // ignore trailing punctuation
                 timesTyped[word] = (timesTyped[word] || 0) + 1;
                 if (timesTyped[word] >= 2) {
@@ -71,11 +74,10 @@
                     isCompleted[word] = true;
                 }
             }
-        };
-        var handleKeyUp = function(keyEvent) {
+
             lastWord = field.value.replace(/.* /, '');
             completion = completions[lastWord];
-            if (keyEvent.keyCode === 9 && completion) {  // tab
+            if (keyCode === 9 && completion) {  // tab
                 field.value += completion;
                 field.dispatchEvent(inputEvent);  // make React notice the new text
                 lastWord = field.value.replace(/.* /, '');  // maybe complete a longer word
