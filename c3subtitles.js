@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         c3subtitles
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.1
 // @description  autocompletion for c3subtitles!
 // @author       http://github.com/zestyping
 // @match        https://live.c3subtitles.de/write/*
@@ -25,8 +25,55 @@
         }
     };
 
+    // grep -v '[A-Z]' < 999-common-words.txt | sort | grep ... | sed -e 's/\(...\)\(.*\)/\1\2 \1/' | uniq -c -f 1 | grep '^ *1 ' | grep -o '[a-z][a-z][a-z][a-z][a-z]*' > autocomplete-words.txt
+    var autocompleteWords = [
+        'able', 'across', 'adjective', 'afraid', 'after', 'agreed', 'ahead',
+        'almost', 'already', 'also', 'although', 'always', 'angle', 'animal',
+        'another', 'answer', 'around', 'arrived', 'away', 'baby', 'back',
+        'ball', 'bank', 'base', 'been', 'before', 'behind', 'being', 'bill',
+        'bird', 'black', 'blue', 'body', 'bone', 'book', 'born', 'branch',
+        'break', 'burning', 'business', 'call', 'came', 'case', 'cell',
+        'certain', 'check', 'choose', 'church', 'circle', 'city', 'class',
+        'climbed', 'coast', 'copy', 'cost', 'cotton', 'covered', 'cow',
+        'create', 'cried', 'current', 'dance', 'dark', 'deep', 'developed',
+        'dictionary', 'died', 'doctor', 'dollars', 'door', 'down', 'dress',
+        'drive', 'drop', 'during', 'each', 'edge', 'effect', 'egg', 'eight',
+        'either', 'else', 'energy', 'engine', 'enjoy', 'enough', 'especially',
+        'exercise', 'fall', 'fast', 'father', 'fear', 'field', 'filled',
+        'fish', 'five', 'flat', 'follow', 'fraction', 'friend', 'fruit',
+        'full', 'game', 'garden', 'gave', 'general', 'girl', 'give', 'glass',
+        'gold', 'gone', 'good', 'government', 'grass', 'guess', 'hair', 'halt',
+        'hand', 'hard', 'have', 'high', 'hill', 'home', 'hope', 'horse',
+        'huge', 'human', 'idea', 'important', 'information', 'iron', 'island',
+        'joined', 'jumped', 'just', 'keep', 'kept', 'killed', 'knew', 'lady',
+        'lake', 'large', 'last', 'later', 'laughed', 'left', 'leg', 'length',
+        'less', 'level', 'light', 'like', 'line', 'little', 'live', 'located',
+        'long', 'look', 'lost', 'loud', 'love', 'machine', 'made', 'main',
+        'major', 'make', 'meet', 'melody', 'member', 'middle', 'might',
+        'miss', 'modern', 'molecule', 'moment', 'moon', 'most', 'mother',
+        'much', 'name', 'near', 'necessary', 'need', 'never', 'next', 'night',
+        'nose', 'noun', 'object', 'observe', 'ocean', 'often', 'once', 'only',
+        'open', 'opposite', 'order', 'other', 'over', 'oxygen', 'page',
+        'paper', 'pattern', 'people', 'phrase', 'piece', 'please', 'plural',
+        'poem', 'point', 'pole', 'poor', 'pound', 'power', 'practice',
+        'printed', 'pulled', 'pushed', 'question', 'race', 'radio', 'rather',
+        'region', 'return', 'rhythm', 'rich', 'ride', 'right', 'ring', 'rise',
+        'river', 'road', 'rock', 'rolled', 'rope', 'rose', 'round', 'rule',
+        'safe', 'same', 'sand', 'save', 'scale', 'school', 'score', 'sell',
+        'separate', 'serve', 'ship', 'side', 'silent', 'sister', 'size',
+        'skin', 'slowly', 'small', 'smell', 'smiled', 'snow', 'soft', 'soil',
+        'soon', 'space', 'spot', 'square', 'such', 'suddenly', 'suffix',
+        'swim', 'syllable', 'symbol', 'system', 'table', 'tail', 'take',
+        'tell', 'temperature', 'term', 'test', 'thus', 'tied', 'time', 'tiny',
+        'today', 'together', 'told', 'tone', 'total', 'touch', 'tree',
+        'trouble', 'tube', 'turn', 'type', 'uncle', 'unit', 'until', 'upon',
+        'usually', 'various', 'view', 'village', 'visit', 'voice', 'vowel',
+        'wait', 'want', 'wave', 'week', 'weight', 'well', 'went', 'were',
+        'what', 'wide', 'wife', 'wire', 'wish', 'wood', 'yard', 'year',
+        'yellow'
+    ];
     // from https://en.wikipedia.org/wiki/Most_common_words_in_English
-    var commonWords = [
+    var mostCommonWords = [
         'time', 'person', 'year', 'way', 'day', 'thing', 'man', 'world',
         'life', 'hand', 'part', 'child', 'eye', 'woman', 'place', 'work',
         'week', 'case', 'point', 'government', 'company', 'number', 'group',
@@ -42,8 +89,10 @@
         'but', 'his', 'they', 'her', 'she', 'or', 'an', 'will', 'my', 'one',
         'all', 'would', 'there', 'their'
     ];
-    for (var i = 0; i < commonWords.length; i++) {
-        addCompletion(commonWords[i]);
+
+    var initialWords = autocompleteWords + commonWords;
+    for (var i = 0; i < initialWords.length; i++) {
+        addCompletion(initialWords[i]);
     }
 
     window.setTimeout(function() {
