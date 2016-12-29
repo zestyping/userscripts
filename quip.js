@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quip
 // @namespace    http://tampermonkey.net/
-// @version      0.7
+// @version      0.9
 // @description  Fix formatting and hide the conversation sidebar on Quip pages
 // @author       Ping
 // @match        https://*.quip.com/*
@@ -54,6 +54,11 @@ body div#app .document article {
     padding: 40px 30px;
 }
 
+/* links */
+.document a, .link, lnk, .document .article control a.content {
+    color: #08c;
+}
+
 /* HL: Main page heading */
 body div#app article .section[data-section-style="1"]>.content,
 body .document-thread div h1 {
@@ -90,12 +95,14 @@ body .document-thread div h3 {
 }
 
 /* Code block */
+div.document code, div.document pre, div.thread-thumbnail-document code,
 body div#app article .section[data-section-style="4"]>.content,
 body div#app article .section[data-section-style="0"]>.content code,
 body .document-thread div pre {
-    font-family: Lucida Sans Typewriter, Monaco, Menlo, Courier, monospace, 'Quip Glyphs';
+    font-family: "Lucida Sans Typewriter", Monaco, Menlo, Courier, monospace, "Quip Glyphs";
     font-size: 12px;
     text-shadow: none;
+    color: #070;
 }
 
 body div#app article .section[data-section-style="4"]>.content {
@@ -305,11 +312,17 @@ div.editor-stylebar.visible.expanded {
     border-right: none;
     margin: 60px 0 0 0;
     padding: 4px 0;
-    width: 300px;
 }
 
 .editor-outline .editor-outline-section {
     margin: 4px 8px;
+}
+
+.editor-outline .editor-outline-section[data-section-style="2"],
+.editor-outline .editor-outline-section[data-section-style="3"] {
+    font-weight: normal;
+    color: #800 !important;
+    text-transform: none;
 }
 
 .app .document-thread .outline-inline-container>.editor-outline .editor-outline-title {
