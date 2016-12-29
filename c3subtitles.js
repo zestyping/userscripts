@@ -33,9 +33,11 @@
         hint.style.left = field.offsetLeft + 'px';
         hint.style.top = field.offsetTop + 'px';
         hint.style.height = field.offsetHeight + 'px';
+        hint.style.right = '0px';
         hint.style.color = '#2c2';
         hint.style.pointerEvents = 'none';
-        hint.style.textAlign = 'left';
+        hint.style.textAlign = 'right';
+        hint.innerText = 'use TAB to autocomplete ';
         parent.appendChild(hint);
 
         var measure = document.createElement('span');
@@ -82,9 +84,10 @@
             hint.innerText = completion || '';
             if (completion) {
                 hint.style.left = (4 + measureWidth(field.value)) + 'px';
+                hint.style.textAlign = 'left';
             }
         };
         document.addEventListener('keydown', handleKeyDown);
         document.addEventListener('keyup', handleKeyUp);
-    }, 2000);
+    }, 3000);
 })();
