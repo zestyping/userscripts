@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         c3subtitles
 // @namespace    http://tampermonkey.net/
-// @version      1.7
+// @version      2.0
 // @description  autocompletion for c3subtitles!
 // @author       http://github.com/zestyping
 // @match        https://live.c3subtitles.de/write/*
@@ -12,8 +12,10 @@
     var timesTyped = {};
     var completions = {};
     var isCompleted = {};
+    var caseSensitiveCompletion = true;
 
     var addCompletion = function(word) {
+        if (!caseSensitiveCompletion) word = word.toLowerCase();
         if (word.length >= 5) {
             for (var i = word.length - 1; i >= 2; i--) {
                 var prefix = word.substring(0, i);
@@ -26,7 +28,7 @@
     };
 
     // grep -v '[A-Z]' < 999-common-words.txt | sort | grep ... | sed -e 's/\(...\)\(.*\)/\1\2 \1/' | uniq -c -f 1 | grep '^ *1 ' | grep -o '[a-z][a-z][a-z][a-z][a-z]*' > autocomplete-words.txt
-    var autocompleteWords = [
+    var enAutocompleteWords = [
         'able', 'across', 'adjective', 'afraid', 'after', 'agreed', 'ahead',
         'almost', 'already', 'also', 'although', 'always', 'angle', 'animal',
         'another', 'answer', 'around', 'arrived', 'away', 'baby', 'back',
@@ -70,11 +72,9 @@
         'usually', 'various', 'view', 'village', 'visit', 'voice', 'vowel',
         'wait', 'want', 'waves', 'week', 'weight', 'well', 'went', 'were',
         'what', 'wide', 'wife', 'wire', 'wish', 'wood', 'yard', 'year',
-        'yellow'
-    ];
+        'yellow',
 
     // grep -v '[A-Z]' < 3000-common-words.txt | sort | grep ... | sed -e 's/\(...\)\(.*\)/\1\2 \1/' | uniq -c -f 1 | grep '^ *1 ' | grep -o '[a-z][a-z][a-z][a-z][a-z]*' > autocomplete-words-2.txt
-    var autocompleteWords2 = [
         'abandon', 'ability', 'able', 'abroad', 'abuse', 'academic', 'acid',
         'acknowledge', 'acquire', 'across', 'adapt', 'adequate', 'adult',
         'afraid', 'aggressive', 'ahead', 'album', 'alcohol', 'alive', 'almost',
@@ -122,11 +122,9 @@
         'utility', 'vacation', 'vast', 'vegetable', 'vehicle', 'venture',
         'vessel', 'veteran', 'video', 'village', 'vital', 'voice',
         'vulnerable', 'wage', 'wait', 'wake', 'wave', 'wedding', 'wife',
-        'wipe', 'wire', 'woman', 'wrap', 'wrong', 'yard', 'yield', 'zone'
-    ];
+        'wipe', 'wire', 'woman', 'wrap', 'wrong', 'yard', 'yield', 'zone',
 
     // from https://en.wikipedia.org/wiki/Most_common_words_in_English
-    var commonWords = [
         'time', 'person', 'year', 'way', 'day', 'thing', 'man', 'world',
         'life', 'hand', 'part', 'child', 'eye', 'woman', 'place', 'work',
         'week', 'case', 'point', 'government', 'company', 'number', 'group',
@@ -140,61 +138,109 @@
         'up', 'about', 'into', 'over', 'after', 'beneath', 'under', 'above',
         'the', 'and', 'a', 'that', 'I', 'it', 'not', 'he', 'as', 'you', 'this',
         'but', 'his', 'they', 'her', 'she', 'or', 'an', 'will', 'my', 'one',
-        'all', 'would', 'there', 'their'
-    ];
+        'all', 'would', 'there', 'their',
 
-    // A few hand-picked words.
-    var hackerWords = [
+    // hand-picked words: software
+        'application', 'server', 'network', 'Ethernet',
+        'architecture', 'request', 'protocol', 'abstract', 'virtual',
+        'container', 'virtualization', 'operating', 'system', 'instruction',
+        'building', 'build', 'continuous', 'integration', 'interface',
+        'module', 'assembly', 'package', 'deploy', 'deployment', 'service',
+        'optimize', 'optimization', 'understand', 'testing', 'compiler',
+        'latency' ,'performance', 'incremental', 'throughput', 'capacity',
+        'database', 'infrastructure',
+        'Internet', 'telecommunications', 'provider', 'platform',
+
+    // hand-picked words: computer security
         'computer', 'software', 'hardware', 'exploit', 'vulnerability',
         'firmware', 'malware', 'attack', 'intrusion', 'protection', 'detection',
         'embedded', 'device', 'peripheral', 'implementation', 'implement',
         'disclosure', 'publication', 'research', 'announce', 'announcement',
         'communicate', 'communication', 'community', 'communities',
+        'anonymous', 'pseudonymous', 'identification', 'password', 'privacy',
+        'public key', 'private key', 'encryption', 'decryption', 'integrity',
+        'encryption key', 'decryption key', 'symmetric encryption', 'intercept',
+        'man-in-the-middle', 'obfuscation', 'steganography', 'security',
+        'anonymity', 'authentication', 'authorization', 'insecure',
+
+    // hand-picked words: society
         'national', 'international', 'political', 'economic', 'organization',
         'activist', 'defense', 'testimony', 'justice', 'injustice',
         'jurisdiction', 'observation', 'indictment', 'prosecution',
-        'Chaos Communication', 'Communication Congress', 'Congress',
-        'application', 'server', 'network', 'Ethernet',
-        'architecture', 'request', 'protocol', 'abstract', 'virtual',
-        'container', 'virtualization', 'operating', 'system', 'instruction',
-        'building', 'build', 'continuous', 'integration', 'interface',
-        'module', 'assembly', 'package', 'deploy', 'deployment',
-        'service', 'cloud', 'accelerate', 'problem', 'solution', 'science',
-        'hypothesis', 'experiment', 'database', 'infrastructure',
-        'optimize', 'optimization', 'understand', 'testing', 'compiler',
-        'latency' ,'performance', 'incremental', 'throughput', 'capacity',
-        'expensive', 'penalty', 'advantage', 'disadvantage',
         'participant', 'volunteer', 'connect', 'remember', 'individual',
+        'newspaper', 'broadcast',
+        'Chaos Communication', 'Communication Congress', 'Congress',
+        'United States', 'Germany', 'Europe', 'Canada',
+
+    // hand-picked words: science
+        'accelerate', 'problem', 'solution', 'science',
+        'hypothesis', 'experiment',
+        'expensive', 'penalty', 'advantage', 'disadvantage',
+
+    // hand-picked words: space
+        'colonization', 'species', 'technology', 'challenge',
+        'humanity', 'solar system', 'planet', 'exoplanet',
+        'satellite', 'telescope', 'future', 'planetary', 'rocket',
+        'Earth', 'Mars', 'colony', 'asteroid', 'space shuttle', 'shuttle',
+        'interstellar', 'expansion', 'cosmos', 'reasonable', 'conditions',
+        'atmosphere', 'agriculture', 'civilization', 'settlement',
+        'residential', 'supply chain', 'transport',
+
+    // hand-picked words: other
         'something', 'everything', 'anything',
         'someone', 'everyone', 'anyone',
         'somebody', 'everybody', 'anybody',
         'somewhere', 'everywhere', 'anywhere',
         'overwhelm', 'overwhelmed', 'overwhelming',
-        'Internet', 'telecommunications', 'provider', 'platform',
-        'anonymous', 'pseudonymous', 'identification', 'password', 'privacy',
-        'United States', 'Germany', 'Europe', 'Canada',
-        'public key', 'private key', 'encryption', 'decryption', 'integrity',
-        'encryption key', 'decryption key', 'symmetric encryption', 'intercept',
-        'man-in-the-middle', 'obfuscation', 'steganography', 'security',
-        'anonymity', 'authentication', 'authorization', 'insecure',
         'dangerous', 'significant', 'remarkable', 'critical', 'devastating',
         'massive', 'widespread', 'profound', 'phenomenon', 'probably',
-        'probability', 'statistical', 'user interface',
-        'interplanetary', 'colonization', 'species',
-        'Liz George', 'Peter Buschkamp', 'technological', 'challenge',
-        'humanity', 'solar system', 'planet', 'exoplanet', 'astronomer',
-        'satellite', 'telescope', 'future', 'planetary', 'rocket',
-        'Earth', 'Mars', 'colony', 'asteroid', 'space shuttle', 'shuttle',
-        'interstellar', 'expansion', 'cosmos', 'reasonable', 'conditions',
-        'atmosphere', 'agriculture', 'civilization', 'settlement',
-        'residential', 'supply chain', 'transport'
+        'probability', 'statistical', 'user interface', 'unlimited',
+        'insignificant', 'underestimate'
     ];
 
-    var initialWords = autocompleteWords.concat(
-        autocompleteWords2).concat(commonWords).concat(hackerWords);
-    for (var i = 0; i < initialWords.length; i++) {
-        addCompletion(initialWords[i]);
-    }
+    var deAutocompleteWords = [
+        'abbauen', 'ablehnen', 'abwarten', 'afrikanischen', 'aggressiv',
+        'agieren', 'ahnen', 'ankommt', 'anlegen', 'anmelden', 'annehmen',
+        'anpassen', 'anwesend', 'asiatischen', 'auch', 'bald', 'basiert',
+        'bequem', 'birgt', 'blutigen', 'brutal', 'buchen', 'dabei', 'dachte',
+        'dadurch', 'dagegen', 'decken', 'detaillierte', 'diplomatischen',
+        'doch', 'donnerstags', 'dotierten', 'drucken', 'dumm', 'effektiv',
+        'egal', 'ehrlich', 'energisch', 'erbracht', 'ereignete', 'erprobt',
+        'essen', 'ethnischen', 'etliche', 'euch', 'europaweit', 'eventuell',
+        'exakt', 'fahren', 'flexibel', 'flog', 'froh', 'gearbeitet', 'gilt',
+        'grundlegende', 'hast', 'hoch', 'http', 'hundert', 'ignoriert',
+        'immer', 'wieder', 'inhaltlich', 'inklusive', 'inmitten', 'inwieweit',
+        'inzwischen', 'irischen', 'isoliert', 'jeher', 'just', 'kaputt',
+        'kirchlichen', 'klug', 'krank', 'laden', 'lediglich', 'lenken',
+        'lesen', 'leuchtet', 'live', 'logische', 'lohnt', 'lustig', 'mahnte',
+        'maximal', 'messen', 'mich', 'mochte', 'momentan', 'nach',
+        'nachzudenken', 'nein', 'nicht', 'nicht', 'einmal', 'nicht', 'nichts',
+        'nichts', 'nimmt', 'nirgendwo', 'nominiert', 'null', 'obwohl', 'oder',
+        'olympischen', 'online', 'paar', 'packen', 'peinlich', 'plus', 'quer',
+        'raten', 'raus', 'renommierten', 'retten', 'rutschte', 'sachlich',
+        'satt', 'signalisiert', 'skeptisch', 'sobald', 'soeben', 'genannten',
+        'somit', 'soviel', 'systematisch', 'tanzen', 'telefonisch', 'testen',
+        'toll', 'bereinstimmungen', 'inärdatei', 'tandardeingabe',
+        'umliegenden', 'unerwartet', 'unheimlich', 'unklar', 'unter',
+        'anderem', 'vage', 'vehement', 'allem', 'weder', 'winzigen', 'wobei',
+        'wodurch', 'womit', 'wonach', 'wovon', 'wozu', 'wuchs', 'zudem',
+        'zukommen', 'anderen', 'einen', 'zuordnen'
+    ];
+
+    var resetDictionary = function (initialWords) {
+        completions = {};
+        isCompleted = {};
+        for (var i = initialWords.length - 1; i >= 0; i--) {
+            addCompletion(initialWords[i]);
+        }
+    };
+
+    var initialWordSets = {
+        'en': enAutocompleteWords,
+        'de': deAutocompleteWords
+    };
+
+    resetDictionary(initialWordSets['en']);
 
     window.setTimeout(function() {
         document.body.style.lineHeight = '1.5';
@@ -229,6 +275,32 @@
         measure.style.fontSize = '16px';
         parent.appendChild(measure);
 
+        var buttonBox = document.createElement('div');
+        buttonBox.style.position = 'absolute';
+        buttonBox.style.top = '2px';
+        buttonBox.style.right = '6px';
+        buttonBox.style.zIndex = '9999';
+        buttonBox.style.fontFamily = 'Roboto';
+        buttonBox.style.fontSize = '12px';
+        buttonBox.innerText = 'Reset autocompletions to:\xa0';
+        document.body.appendChild(buttonBox);
+
+        var isCaseSensitive = {
+            'en': true,
+            'de': false
+        };
+        var addResetButton = function(lang) {
+            var reset = document.createElement('button');
+            reset.innerText = lang;
+            reset.addEventListener('click', function() {
+                caseSensitiveCompletion = isCaseSensitive[lang];
+                resetDictionary(initialWordSets[lang]);
+            });
+            buttonBox.appendChild(reset);
+        };
+        addResetButton('en');
+        addResetButton('de');
+
         function measureWidth(text) {
             measure.innerText = text;
             return measure.offsetWidth;
@@ -261,6 +333,7 @@
             }
 
             lastWord = field.value.replace(/.* /, '');
+            if (!caseSensitiveCompletion) lastWord = lastWord.toLowerCase();
             var twoWordMatch = field.value.match(/\S\S\S+ \S\S\S+$/);
             lastTwoWords = twoWordMatch ? twoWordMatch[0] : null;
             completion = completions[lastWord];
@@ -268,6 +341,7 @@
                 field.value += completion;
                 field.dispatchEvent(inputEvent);  // make React notice the new text
                 lastWord = field.value.replace(/.* /, '');  // maybe complete a longer word
+                if (!caseSensitiveCompletion) lastWord = lastWord.toLowerCase();
                 completion = completions[lastWord];
             }
             hint.innerText = completion || '';
@@ -278,5 +352,5 @@
         };
         document.addEventListener('keydown', handleKeyDown);
         document.addEventListener('keyup', handleKeyUp);
-    }, 3000);
+    }, 2000);
 })();
