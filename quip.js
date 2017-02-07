@@ -30,15 +30,30 @@ body div#app article div.content,
 body div#app article .section[data-section-type="1"] ul li,
 body div#app article .section[data-section-type="1"] ul li:before,
 body .document-thread div,
-body .document-thread div li {
+body .document-thread div li,
+body div#app .jetson-chat-thread .jetson-message-document-body div,
+body div#app .jetson-chat-thread .jetson-message-document-body div li,
+body div#app .jetson-chat-thread .jetson-message-document-body div p {
     font-family: Roboto, Arial, "Quip Glyphs";
     font-weight: 400;
     font-size: 13px;
     line-height: 1.45;
 }
 
+body .jetson-message-document-body div ul {
+    padding-left: 12px;
+}
+
 body .document-thread div.header div {
     font-size: 11px;
+}
+
+/* overall margins */
+.parts-screen-body, .parts-screen-children-wrapper {
+    padding: 0 !important;
+}
+body div#app .document article {
+    padding: 12px;
 }
 
 body div#app article .content br {
@@ -52,6 +67,39 @@ body div#app article .section[data-section-style="6"] ul li:before {
 
 body div#app .document article {
     padding: 40px 30px;
+}
+
+/* margin for profile icons in conversations */
+.jetson-message-picture {
+    width: 22px;
+    margin-right: 4px;
+}
+
+.jetson-message-picture > div > div {
+    border-radius: 11px !important;
+}
+
+.jetson-message-picture > div,
+.jetson-message-picture img {
+    width: 22px !important;
+    height: 22px !important;
+}
+
+.jetson-message-quote {
+    margin-top: 0;
+    padding-left: 8px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.jetson-message-quote-links {
+    margin-top: 6px;
+}
+
+.jetson-message-button {
+    padding-top: 2px;
+    width: 12px;
+    height: 12px;
 }
 
 /* links */
@@ -343,7 +391,8 @@ div.editor-stylebar.visible.expanded {
 
     // Hide the conversation sidebar.
     function hide_conversation() {
-        var button = document.querySelector('.icon-hide-conversation');
+        var button = document.querySelector('.icon-hide-conversation') ||
+            document.querySelector('.jetson-document-chat-hide');
         if (button) {
             button.click();
         } else {
