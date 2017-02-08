@@ -29,15 +29,75 @@ body,
 body div#app article div.content,
 body div#app article .section[data-section-type="1"] ul li,
 body div#app article .section[data-section-type="1"] ul li:before,
+body .navigation-controller .nav-path input.nav-path-title,
 body .document-thread div,
 body .document-thread div li,
 body div#app .jetson-chat-thread .jetson-message-document-body div,
 body div#app .jetson-chat-thread .jetson-message-document-body div li,
-body div#app .jetson-chat-thread .jetson-message-document-body div p {
+body div#app .jetson-chat-thread .jetson-message-document-body div p,
+body div#app .search-input input,
+.jetson-button-text {
     font-family: Roboto, Arial, "Quip Glyphs";
     font-weight: 400;
     font-size: 13px;
     line-height: 1.45;
+}
+
+/* navigation bar */
+body .navigation-controller .nav-path input.nav-path-title {
+    text-align: left;
+}
+
+.jetson-button, .nav-global-search {
+    height: 22px !important;
+    padding: 0 4px !important;
+}
+
+.navigation-controller-path .jetson-button {
+    height: 16px !important;
+    padding: 0 4px !important;
+}
+
+.jetson-button-icon {
+    height: 16px !important;
+}
+
+.jetson-button-text {
+    font-size: 13px !important;
+}
+
+.navigation-controller-toolbar .navigation-controller-path + div {
+    opacity: 0.3;
+}
+
+.navigation-controller-toolbar:hover .navigation-controller-path + div {
+    opacity: 1;
+}
+
+.navigation-controller-toolbar:not(.has-notification-bar):after {
+    background: transparent;
+}
+
+.navigation-controller-toolbar {
+    height: 40px !important;
+}
+
+.navigation-controller-body {
+    top: 40px !important;
+}
+
+.navigation-controller-path {
+    justify-content: flex-start;
+    padding: 0 18px;
+    height: 18px !important;
+}
+
+.parts-toolbar {
+    padding: 0 18px !important;
+}
+
+.navigation-controller-path + div {
+    top: 16px !important;
 }
 
 body .jetson-message-document-body div ul {
@@ -52,8 +112,8 @@ body .document-thread div.header div {
 .parts-screen-body, .parts-screen-children-wrapper {
     padding: 0 !important;
 }
-body div#app .document article {
-    padding: 12px;
+body div#app .document article.article {
+    padding: 0 18px;
 }
 
 body div#app article .content br {
@@ -108,6 +168,11 @@ body div#app .document article {
 }
 
 /* HL: Main page heading */
+body div#app article .section[data-section-style="1"],
+body .document-thread div h1 {
+    margin: 0 0 16px;
+}
+
 body div#app article .section[data-section-style="1"]>.content,
 body .document-thread div h1 {
     font-size: 28px;
@@ -117,7 +182,7 @@ body .document-thread div h1 {
 /* HM: Section heading */
 body div#app article .section[data-section-style="2"],
 body .document-thread div h2 {
-    margin: 24px 0 18px;
+    margin: 20px 0 16px;
 }
 
 body div#app article .section[data-section-style="2"]>.content,
@@ -248,7 +313,7 @@ span.user-caret-initials {
 
 div.editor-stylebar {
     opacity: 0.5;
-    left: -29px;
+    left: -48px;
     top: 0px;
     width: 16px;
     height: 16px;
@@ -324,7 +389,7 @@ div.editor-stylebar.visible.expanded {
 }
 
 .annotation-gutter-icon {
-    left: 12px;
+    left: 0;
     margin-top: -1px;
     width: 20px;
     height: 20px;
