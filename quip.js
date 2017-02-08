@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quip
 // @namespace    http://tampermonkey.net/
-// @version      1.1
+// @version      1.2
 // @description  Fix formatting and hide the conversation sidebar on Quip pages
 // @author       Ping
 // @match        https://*.quip.com/*
@@ -29,9 +29,9 @@ body,
 body div#app article div.content,
 body div#app article .section[data-section-type="1"] ul li,
 body div#app article .section[data-section-type="1"] ul li:before,
-body .navigation-controller .nav-path input.nav-path-title,
-body .document-thread div,
-body .document-thread div li,
+body div#app .navigation-controller .nav-path input.nav-path-title,
+body div#app .document-thread div,
+body div#app .document-thread div li,
 body div#app .jetson-chat-thread .jetson-message-document-body div,
 body div#app .jetson-chat-thread .jetson-message-document-body div li,
 body div#app .jetson-chat-thread .jetson-message-document-body div p,
@@ -43,63 +43,66 @@ body div#app .search-input input,
     line-height: 1.45;
 }
 
-/* navigation bar */
-body .navigation-controller .nav-path input.nav-path-title {
+/* === toolbar area === */
+
+/* folder path */
+#app .navigation-controller .nav-path input.nav-path-title {
     text-align: left;
 }
+#app .navigation-controller-path {
+    justify-content: flex-start;
+    padding: 0 18px;
+    height: 18px !important;
+}
 
-.jetson-button, .nav-global-search {
+/* "External" warning */
+#app .navigation-controller-path .jetson-button {
+    height: 16px !important;
+    padding: 0 4px !important;
+}
+
+/* toolbar buttons */
+.jetson-button, #app .nav-global-search {
     height: 22px !important;
     padding: 0 4px !important;
 }
-
-.navigation-controller-path .jetson-button {
-    height: 16px !important;
-    padding: 0 4px !important;
-}
-
 .jetson-button-icon {
     height: 16px !important;
 }
-
 .jetson-button-text {
     font-size: 13px !important;
 }
 
-.navigation-controller-toolbar .navigation-controller-path + div {
+/* toolbar button area */
+#app .navigation-controller-toolbar .navigation-controller-path + div {
     opacity: 0.3;
 }
-
-.navigation-controller-toolbar:hover .navigation-controller-path + div {
+#app .navigation-controller-toolbar:hover .navigation-controller-path + div {
     opacity: 1;
 }
+#app .navigation-controller-toolbar {
+    height: 40px !important;
+}
 
+/* horizontal rule along the bottom of the toolbar */
 .navigation-controller-toolbar:not(.has-notification-bar):after {
     background: transparent;
 }
 
-.navigation-controller-toolbar {
-    height: 40px !important;
-}
-
-.navigation-controller-body {
+/* document area, below the toolbar */
+#app .navigation-controller-body {
     top: 40px !important;
-}
-
-.navigation-controller-path {
-    justify-content: flex-start;
-    padding: 0 18px;
-    height: 18px !important;
 }
 
 .parts-toolbar {
     padding: 0 18px !important;
 }
 
-.navigation-controller-path + div {
+#app .navigation-controller-path + div {
     top: 16px !important;
 }
 
+/* === conversation/history area === */
 body .jetson-message-document-body div ul {
     padding-left: 12px;
 }
@@ -108,7 +111,38 @@ body .document-thread div.header div {
     font-size: 11px;
 }
 
-/* overall margins */
+/* profile icons */
+.jetson-message-picture {
+    width: 22px;
+    margin-right: 4px;
+}
+.jetson-message-picture > div > div {
+    border-radius: 11px !important;
+}
+.jetson-message-picture > div,
+.jetson-message-picture img {
+    width: 22px !important;
+    height: 22px !important;
+}
+
+/* history snippets */
+.jetson-message-quote {
+    margin-top: 0;
+    padding-left: 8px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.jetson-message-quote-links {
+    margin-top: 6px;
+}
+.jetson-message-button {
+    padding-top: 2px;
+    width: 12px;
+    height: 12px;
+}
+
+/* === overall margins === */
+
 .parts-screen-body, .parts-screen-children-wrapper {
     padding: 0 !important;
 }
@@ -129,38 +163,6 @@ body div#app .document article {
     padding: 40px 30px;
 }
 
-/* margin for profile icons in conversations */
-.jetson-message-picture {
-    width: 22px;
-    margin-right: 4px;
-}
-
-.jetson-message-picture > div > div {
-    border-radius: 11px !important;
-}
-
-.jetson-message-picture > div,
-.jetson-message-picture img {
-    width: 22px !important;
-    height: 22px !important;
-}
-
-.jetson-message-quote {
-    margin-top: 0;
-    padding-left: 8px;
-    padding-top: 0;
-    padding-bottom: 0;
-}
-
-.jetson-message-quote-links {
-    margin-top: 6px;
-}
-
-.jetson-message-button {
-    padding-top: 2px;
-    width: 12px;
-    height: 12px;
-}
 
 /* links */
 .document a, .link, lnk, .document .article control a.content {
