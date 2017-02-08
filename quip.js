@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quip
 // @namespace    http://tampermonkey.net/
-// @version      1.6
+// @version      1.7
 // @description  Fix formatting and hide the conversation sidebar on Quip pages
 // @author       Ping
 // @match        https://*.quip.com/*
@@ -52,7 +52,7 @@ body div#app .search-input input,
 }
 #app .navigation-controller-path {
     justify-content: flex-start;
-    padding: 0 18px;
+    padding: 0 18px 18px;
     height: 18px !important;
 }
 
@@ -72,6 +72,11 @@ body div#app .search-input input,
 }
 .jetson-button-text {
     font-size: 13px !important;
+}
+#app .navigation-controller-toolbar .parts-profile-picture img {
+    width: 22px !important;
+    height: 22px !important;
+    margin-top: 3px;
 }
 
 /* toolbar button area */
@@ -163,6 +168,11 @@ body .document-thread div.header div {
 
 .parts-screen-footer {
     height: 32px !important;
+}
+
+.jetson-chat-thread-footer {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
 }
 
 /* === overall margins === */
