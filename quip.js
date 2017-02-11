@@ -156,14 +156,14 @@ body .message-list .jetson-message:not(:first-of-type) {
 }
 
 /* popup chat window */
-parts-panel .navigation-controller-toolbar {
+.parts-panel .navigation-controller-toolbar {
     height: 32px !important;
 }
 
-parts-panel .navigation-controller-body {
+.parts-panel .navigation-controller-body {
     margin-top: 32px !important;
 }
-parts-panel .jetson-chat-thread .parts-screen-body {
+.parts-panel .jetson-chat-thread .parts-screen-body {
     margin-bottom: 32px !important;
 }
 
