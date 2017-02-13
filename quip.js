@@ -165,7 +165,7 @@ body .message-list .jetson-message {
 }
 
 .parts-panel .parts-toolbar {
-    padding: 0 18px !important;
+    padding: 0 8px !important;
 }
 
 .parts-panel .navigation-controller-body {
