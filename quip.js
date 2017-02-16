@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quip
 // @namespace    http://tampermonkey.net/
-// @version      2.3
+// @version      2.4
 // @description  Fix formatting and hide the conversation sidebar on Quip pages
 // @author       Ping
 // @match        https://*.quip.com/*
@@ -37,7 +37,12 @@ body div#app .jetson-chat-thread .thread-message-document-body div li,
 body div#app .jetson-chat-thread .thread-message-document-body div p,
 body div#app .search-input input,
 .jetson-chat-thread-input .text-box,
-.jetson-button-text {
+.jetson-button-text,
+body .jetson-document-chat div,
+body .jetson-document-chat span,
+body .jetson-document-chat h1,
+body .jetson-document-chat h2,
+body .jetson-document-chat h3 {
     font-family: Roboto, Arial, "Quip Glyphs";
     font-weight: 400;
     font-size: 13px;
@@ -248,7 +253,8 @@ body .document-thread div h1 {
 }
 
 body div#app article .section[data-section-style="1"]>.content,
-body .document-thread div h1 {
+body .document-thread div h1,
+body .jetson-document-chat h1 {
     font-size: 28px;
     font-weight: 400;
 }
@@ -267,6 +273,12 @@ body .document-thread div h2 {
     border-bottom: 1px solid #ccc;
 }
 
+body .jetson-document-chat h2 {
+    font-size: 20px;
+    font-weight: normal;
+}
+
+
 /* HS: Subsection heading */
 body div#app article .section[data-section-style="3"],
 body .document-thread div h3 {
@@ -279,6 +291,11 @@ body .document-thread div h3 {
     font-size: 15px;
     font-weight: bold;
     text-transform: none;
+}
+
+body .jetson-document-chat h3 {
+    font-size: 15px;
+    font-weight: bold;
 }
 
 /* Code block */
