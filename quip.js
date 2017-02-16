@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quip
 // @namespace    http://tampermonkey.net/
-// @version      2.5
+// @version      2.6
 // @description  Fix formatting and hide the conversation sidebar on Quip pages
 // @author       Ping
 // @match        https://*.quip.com/*
@@ -39,6 +39,8 @@ body div#app .search-input input,
 .jetson-chat-thread-input .text-box,
 .jetson-button-text,
 body .jetson-document-chat div,
+body .jetson-document-chat p,
+body .jetson-document-chat li,
 body .jetson-document-chat span,
 body .jetson-document-chat h1,
 body .jetson-document-chat h2,
