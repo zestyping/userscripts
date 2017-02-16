@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitHub
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  Fix formatting
 // @author       Ping
 // @match        https://github.com/*
@@ -19,8 +19,11 @@
   font-size: 11px;
 }
 .blob-num, .blob-code {
-  line-height: 16px;
+  line-height: 14px;
   vertical-align: baseline;
+}
+.add-line-comment {
+  height: 18px;
 }
 `;
     head.appendChild(style);
