@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quip
 // @namespace    http://tampermonkey.net/
-// @version      2.4
+// @version      2.5
 // @description  Fix formatting and hide the conversation sidebar on Quip pages
 // @author       Ping
 // @match        https://*.quip.com/*
@@ -135,11 +135,13 @@ body .message-list .thread-message {
     padding-bottom: 8px;
 }
 body .thread-message-comment-icon {
-    width: 14px;
-    height: 14px;
+    width: 15px;
+    height: 15px;
+    top: -12px;
+    left: -25px;
 }
 body .thread-message-comment-icon .count {
-    line-height: 14px;
+    line-height: 15px;
     font-size: 10px;
 }
 
