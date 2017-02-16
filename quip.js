@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quip
 // @namespace    http://tampermonkey.net/
-// @version      2.1
+// @version      2.3
 // @description  Fix formatting and hide the conversation sidebar on Quip pages
 // @author       Ping
 // @match        https://*.quip.com/*
@@ -15,7 +15,7 @@
 //   - Prevents the backtick key from horribly cycling through 9 formats
 //   - Stops Quip from auto-bolding list items that have subitems
 //   - Reduces the enormous wasteful margins around the page
-//   - Shrinks the huge annoying bubble with the formatting buttons
+//   - Hides the superfluous annoying bubble with the formatting buttons
 //   - Shrinks the huge yellow chat button to a reasonable size
 
 (function() {
@@ -32,9 +32,9 @@ body div#app article .section[data-section-type="1"] ul li:before,
 body div#app .navigation-controller .nav-path input.nav-path-title,
 body div#app .document-thread div,
 body div#app .document-thread div li,
-body div#app .jetson-chat-thread .jetson-message-document-body div,
-body div#app .jetson-chat-thread .jetson-message-document-body div li,
-body div#app .jetson-chat-thread .jetson-message-document-body div p,
+body div#app .jetson-chat-thread .thread-message-document-body div,
+body div#app .jetson-chat-thread .thread-message-document-body div li,
+body div#app .jetson-chat-thread .thread-message-document-body div p,
 body div#app .search-input input,
 .jetson-chat-thread-input .text-box,
 .jetson-button-text {
@@ -115,55 +115,55 @@ body .jetson-document-chat .parts-screen-body {
     bottom: 32px !important;
 }
 
-body .jetson-message-document-body div ul {
+body .thread-message-document-body div ul {
     padding-left: 12px;
 }
 
 body .document-thread div.header div {
     font-size: 11px;
 }
-body .message-list .jetson-message:not(:first-of-type) {
+body .message-list .thread-message:not(:first-of-type) {
     padding-top: 4px;
 }
-body .message-list .jetson-message {
+body .message-list .thread-message {
     padding-left: 8px;
     padding-bottom: 8px;
 }
-body .jetson-message-comment-icon {
+body .thread-message-comment-icon {
     width: 14px;
     height: 14px;
 }
-body .jetson-message-comment-icon .count {
+body .thread-message-comment-icon .count {
     line-height: 14px;
     font-size: 10px;
 }
 
 /* profile icons */
-.jetson-message-picture {
+.thread-message-picture {
     width: 22px;
     margin-right: 4px;
 }
-.jetson-message-picture > div > div {
+.thread-message-picture > div > div {
     border-radius: 11px !important;
 }
-.jetson-message-picture > div,
-.jetson-message-picture img {
+.thread-message-picture > div,
+.thread-message-picture img {
     width: 22px !important;
     height: 22px !important;
 }
 
 /* history snippets */
-.jetson-message-quote {
+.thread-message-quote {
     margin-top: 0;
     padding-left: 8px;
     padding-top: 0;
     padding-bottom: 0;
 }
-.jetson-message-quote-links {
+.thread-message-quote-links {
     margin-top: 4px;
     font-size: 11px;
 }
-.jetson-message-button {
+.thread-message-button {
     padding-top: 2px;
     width: 12px;
     height: 12px;
@@ -385,89 +385,18 @@ span.user-caret-initials {
     padding: 3px;
 }
 
-div.editor-stylebar {
-    opacity: 0.5;
-    left: -48px;
-    top: 0px;
-    width: 16px;
-    height: 16px;
-}
-
-div.editor-stylebar div.editor-stylebar-style {
-    width: 16px;
-    height: 16px;
-    background-size: 12px 12px;
-}
-
-div.editor-stylebar div.editor-stylebar-selection-background {
-    width: 14px;
-    height: 14px;
-    top: 1px;
-    left: 1px;
-}
-
-div.editor-stylebar.visible.expanded {
-    left: 14px;
-}
-
-.editor-stylebar .editor-stylebar-bubble,
-.editor-stylebar.expanded.cover-text .editor-stylebar-bubble {
-    width: 54px;
-    height: 64px;
-    transform: translate3d(-42px, -24px, 0);
-}
-
-.editor-stylebar.expanded.cover-text .editor-stylebar-style[data-style="0"],
-.editor-stylebar.expanded.cover-text[data-section-style="0"] .editor-stylebar-selection-background {
-    transform: translate3d(-39px, -21px, 0);
-}
-
-.editor-stylebar.expanded.cover-text .editor-stylebar-style[data-style="1"],
-.editor-stylebar.expanded.cover-text[data-section-style="1"] .editor-stylebar-selection-background {
-    transform: translate3d(-39px, 0, 0);
-}
-
-.editor-stylebar.expanded.cover-text .editor-stylebar-style[data-style="2"],
-.editor-stylebar.expanded.cover-text[data-section-style="2"] .editor-stylebar-selection-background {
-    transform: translate3d(-23px, 0, 0);
-}
-
-.editor-stylebar.expanded.cover-text .editor-stylebar-style[data-style="3"],
-.editor-stylebar.expanded.cover-text[data-section-style="3"] .editor-stylebar-selection-background {
-    transform: translate3d(-7px, 0, 0);
-}
-
-.editor-stylebar.expanded.cover-text .editor-stylebar-style[data-style="4"],
-.editor-stylebar.expanded.cover-text[data-section-style="4"] .editor-stylebar-selection-background {
-    transform: translate3d(-7px, -21px, 0);
-}
-
-.editor-stylebar.expanded.cover-text .editor-stylebar-style[data-style="5"],
-.editor-stylebar.expanded.cover-text[data-section-style="5"] .editor-stylebar-selection-background {
-    transform: translate3d(-39px, 21px, 0);
-}
-
-.editor-stylebar.expanded.cover-text .editor-stylebar-style[data-style="6"],
-.editor-stylebar.expanded.cover-text[data-section-style="6"] .editor-stylebar-selection-background {
-    transform: translate3d(-7px, 21px, 0);
-}
-
-.editor-stylebar.expanded.cover-text .editor-stylebar-style[data-style="7"],
-.editor-stylebar.expanded.cover-text[data-section-style="7"] .editor-stylebar-selection-background {
-    transform: translate3d(-23px, 21px, 0);
-}
-
-.editor-stylebar.expanded.cover-text .editor-stylebar-style[data-style="16"],
-.editor-stylebar.expanded.cover-text[data-section-style="16"] .editor-stylebar-selection-background {
-    transform: translate3d(-23px, -21px, 0);
+/* Get rid of the style buttons in the margin; you can use the menu instead. */
+div.editor-stylebar.visible {
+    display: none;
 }
 
 .annotation-gutter-icon {
-    left: 0;
-    margin-top: -1px;
-    width: 20px;
-    height: 20px;
-    background-size: 20px 20px;
+    left: -1px;
+    margin-top: -2px;
+    width: 22px;
+    height: 22px;
+    background-size: 22px 22px;
+    padding: 1px 1px 0 0;
 }
 
 .annotation-gutter-icon.numbered {
@@ -501,6 +430,7 @@ div.editor-stylebar.visible.expanded {
     padding: 4px 0;
 }
 
+/* Document outline box */
 .editor-outline .editor-outline-section {
     margin: 4px 8px;
 }
