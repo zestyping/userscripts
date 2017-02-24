@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitHub
 // @namespace    http://tampermonkey.net/
-// @version      0.4
+// @version      0.5
 // @description  Fix formatting
 // @author       Ping
 // @match        https://github.com/*
