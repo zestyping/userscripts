@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitHub
 // @namespace    http://tampermonkey.net/
-// @version      0.3
+// @version      0.4
 // @description  Fix formatting
 // @author       Ping
 // @match        https://github.com/*
@@ -50,7 +50,7 @@ a.reponav-item, .tabnav-tab {
 .file-header {
   padding: 0 10px;
 }
-.btn-sm {
+.btn-sm, .social-count {
   line-height: 17px;
 }
 
@@ -60,11 +60,15 @@ a.reponav-item, .tabnav-tab {
 }
 
 /* Reduce padding above diff summary bar */
-.pr-toolbar {
-  height: 50px;
+.pr-toolbar, .pr-toolbar.is-stuck::after {
+  height: 40px;
+  margin-bottom: 10px;
 }
 .diffbar {
   padding-top: 10px;
+}
+.pr-toolbar.is-stuck + .pr-toolbar-shadow {
+  top: 40px;
 }
 `;
     head.appendChild(style);
