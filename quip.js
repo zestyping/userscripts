@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quip
 // @namespace    http://tampermonkey.net/
-// @version      2.8
+// @version      3.0
 // @description  Fix formatting and hide the conversation sidebar on Quip pages
 // @author       Ping
 // @match        https://*.quip.com/*
@@ -32,24 +32,24 @@ body div#app article .section[data-section-type="1"] ul li:before,
 body div#app .navigation-controller .nav-path input.nav-path-title,
 body div#app .document-thread div,
 body div#app .document-thread div li,
-body div#app .jetson-chat-thread .thread-message-document-body div,
-body div#app .jetson-chat-thread .thread-message-document-body div li,
-body div#app .jetson-chat-thread .thread-message-document-body div p,
+body div#app .document-chat-thread .thread-message-document-body div,
+body div#app .document-chat-thread .thread-message-document-body div li,
+body div#app .document-chat-thread .thread-message-document-body div p,
 body div#app .search-input input,
-.jetson-chat-thread-input .text-box,
-.jetson-button-text,
-body .jetson-document-chat div,
-body .jetson-document-chat p,
-body .jetson-document-chat li {
+.document-chat-thread-input .text-box,
+.button-text,
+body .document-chat div,
+body .document-chat p,
+body .document-chat li {
     font-family: Roboto, Arial, "Quip Glyphs";
     font-weight: 400;
     font-size: 13px;
     line-height: 1.45;
 }
-body .jetson-document-chat span,
-body .jetson-document-chat h1,
-body .jetson-document-chat h2,
-body .jetson-document-chat h3 {
+body .document-chat span,
+body .document-chat h1,
+body .document-chat h2,
+body .document-chat h3 {
     font-family: Roboto, Arial, "Quip Glyphs";
     font-weight: 400;
 }
@@ -67,20 +67,20 @@ body .jetson-document-chat h3 {
 }
 
 /* "External" warning */
-#app .navigation-controller-path .jetson-button {
+#app .navigation-controller-path .button {
     height: 16px !important;
     padding: 0 4px !important;
 }
 
 /* toolbar buttons */
-.jetson-button, #app .nav-global-search {
+.button, #app .nav-global-search {
     height: 22px !important;
     padding: 0 4px !important;
 }
-.jetson-button-icon {
+.button-icon {
     height: 16px !important;
 }
-.jetson-button-text {
+.button-text {
     font-size: 13px !important;
 }
 #app .navigation-controller-toolbar .parts-profile-picture img {
@@ -120,7 +120,7 @@ body .jetson-document-chat h3 {
 
 /* === conversation/history area === */
 
-body .jetson-document-chat .parts-screen-body {
+body .document-chat .parts-screen-body {
     box-shadow: inset 0 1px 2px 0px rgba(0,0,0,0.2);
     bottom: 32px !important;
 }
@@ -171,7 +171,7 @@ body .thread-message-comment-icon .count {
     padding-top: 0;
     padding-bottom: 0;
 }
-body .jetson-document-chat div.thread-message-quote-links {
+body .document-chat div.thread-message-quote-links {
     margin-top: 2px;
     font-size: 11px;
 }
@@ -193,23 +193,23 @@ body .jetson-document-chat div.thread-message-quote-links {
 .parts-panel .navigation-controller-body {
     margin-top: 32px !important;
 }
-.parts-panel .jetson-chat-thread .parts-screen-body {
+.parts-panel .document-chat-thread .parts-screen-body {
     margin-bottom: 32px !important;
 }
-.parts-panel .jetson-chat-thread-footer {
+.parts-panel .document-chat-thread-footer {
     padding-left: 8px !important;
     padding-right: 8px !important;
 }
 
 
 /* chat box */
-.jetson-chat-thread-input .input .text-box {
+.document-chat-thread-input .input .text-box {
     font-size: 13px;
     line-height: 1.45;
     padding: 2px 6px;
 }
 
-.message-input-jetson-attach, .message-input-jetson-emoji {
+.thread-message-input-attach, .thread-message-input-emoji {
     width: 12px;
     height: 12px;
     margin-right: 2px;
@@ -220,7 +220,7 @@ body .jetson-document-chat div.thread-message-quote-links {
     height: 32px !important;
 }
 
-.jetson-chat-thread-footer {
+.thread-chat-thread-footer {
     padding-left: 12px !important;
     padding-right: 12px !important;
 }
@@ -265,7 +265,7 @@ body .document-thread div h1 {
 
 body div#app article .section[data-section-style="1"]>.content,
 body .document-thread div h1,
-body .jetson-document-chat h1 {
+body .document-chat h1 {
     font-size: 28px;
     font-weight: 400;
 }
@@ -284,7 +284,7 @@ body .document-thread div h2 {
     border-bottom: 1px solid #ccc;
 }
 
-body .jetson-document-chat h2 {
+body .document-chat h2 {
     font-size: 20px;
     font-weight: normal;
 }
@@ -304,7 +304,7 @@ body .document-thread div h3 {
     text-transform: none;
 }
 
-body .jetson-document-chat h3 {
+body .document-chat h3 {
     font-size: 15px;
     font-weight: bold;
 }
@@ -489,7 +489,7 @@ div.editor-stylebar.visible {
     // Hide the conversation sidebar.
     function hide_conversation() {
         var button = document.querySelector('.icon-hide-conversation') ||
-            document.querySelector('.jetson-document-chat-hide');
+            document.querySelector('.document-chat-hide');
         if (button) {
             button.click();
         } else {
