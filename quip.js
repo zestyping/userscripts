@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quip
 // @namespace    http://tampermonkey.net/
-// @version      3.3
+// @version      3.4
 // @description  Fix formatting and hide the conversation sidebar on Quip pages
 // @author       Ping
 // @match        https://*.quip.com/*
@@ -40,11 +40,12 @@ body div#app .search-input input,
 .button-text,
 body .document-chat div,
 body .document-chat p,
+body .document-chat .document-inline-edit p,
 body .document-chat li {
     font-family: Roboto, Arial, "Quip Glyphs";
     font-weight: 400;
     font-size: 13px;
-    line-height: 1.45;
+    line-height: 1.45 !important;
 }
 body .document-chat span,
 body .document-chat h1,
@@ -85,6 +86,7 @@ body .document-chat h3 {
 }
 .button-text {
     font-size: 13px !important;
+    line-height: 24px !important;
 }
 #app .navigation-controller-toolbar .parts-profile-picture img {
     width: 22px !important;
@@ -126,6 +128,10 @@ body .document-chat h3 {
 body .document-chat .parts-screen-body {
     box-shadow: inset 0 1px 2px 0px rgba(0,0,0,0.2);
     bottom: 32px !important;
+}
+
+body .thread-message {
+    padding: 0 8px;
 }
 
 body .thread-message-document-body div ul {
@@ -203,9 +209,6 @@ body .document-chat div.thread-message-quote-links {
     padding-left: 8px !important;
     padding-right: 8px !important;
 }
-.parts-panel .body {
-    width: 480px !important;
-}
 
 /* chat box */
 .document-chat-thread-input .input .text-box {
@@ -217,8 +220,11 @@ body .document-chat div.thread-message-quote-links {
 .thread-message-input-attach, .thread-message-input-emoji {
     width: 12px;
     height: 12px;
-    margin-right: 2px;
-    margin-top: 4px;
+    margin: 9px 4px 0 0;
+}
+
+.thread-message-input-send {
+    margin: 4px 0;
 }
 
 .parts-screen-footer {
@@ -226,8 +232,8 @@ body .document-chat div.thread-message-quote-links {
 }
 
 .thread-chat-thread-footer {
-    padding-left: 12px !important;
-    padding-right: 12px !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
 }
 
 /* === overall margins === */
