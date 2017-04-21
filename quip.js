@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quip
 // @namespace    http://tampermonkey.net/
-// @version      3.6
+// @version      3.7
 // @description  Fix formatting and hide the conversation sidebar on Quip pages
 // @author       Ping
 // @match        https://*.quip.com/*
@@ -498,7 +498,7 @@ div.editor-stylebar.visible {
 
     // Disable the annoying backtick key.
     document.body.addEventListener('keydown', function(event) {
-        if (event.keyCode === 192) {
+        if (event.keyCode === 192 && !event.shiftKey && !event.ctrlKey) {
             console.log('blocked keydown event for backtick');
             event.stopPropagation();
             event.preventDefault();
