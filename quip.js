@@ -330,6 +330,7 @@ body div#app article .section[data-section-style="0"]>.content code,
 body .document-thread div pre {
     font-family: "Lucida Sans Typewriter", Monaco, Menlo, Courier, monospace, "Quip Glyphs";
     font-size: 12px;
+    font-style: normal;
     text-shadow: none;
     color: #070;
 }
