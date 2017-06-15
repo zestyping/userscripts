@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitHub
 // @namespace    http://tampermonkey.net/
-// @version      0.5
+// @version      0.6
 // @description  Fix formatting
 // @author       Ping
 // @match        https://github.com/*
@@ -69,6 +69,17 @@ a.reponav-item, .tabnav-tab {
 }
 .pr-toolbar.is-stuck + .pr-toolbar-shadow {
   top: 40px;
+}
+
+/* See more content in commit status descriptions. */
+.branch-action-item.open > .merge-status-list {
+  max-height: none;
+}
+.merge-status-item {
+  padding: 6px 12px;
+}
+.merge-status-item .css-truncate-target {
+  white-space: normal;
 }
 `;
     head.appendChild(style);
