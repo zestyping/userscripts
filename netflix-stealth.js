@@ -23,6 +23,10 @@
 .jawBoneBackground, .background .VideoContainer {
   visibility: hidden;
 }
+/* Episode descriptions in the episode carousel on the show's title page */
+.episodeTitle, .episodeSynopsis {
+  visibility: hidden;
+}
 /* Show title and show information overlays on the main watch page */
 .video-title, .player-title-evidence, .evidence-overlay {
   visibility: hidden;
